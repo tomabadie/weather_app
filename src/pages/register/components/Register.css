@@ -1,0 +1,10 @@
+.register-container {
+    padding: 1rem;
+    
+    .register-section {
+        padding: 1rem;
+        max-width: 800px;
+        background-color: var(--light-background-bloc-color);
+        border-radius: 1rem;
+    }
+}

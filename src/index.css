@@ -3,10 +3,15 @@
   line-height: 1.5;
   font-weight: 400;
 
+  --light-text-color: #000;
+  --light-background-bloc-color: rgba(244, 245, 226, 0.8);
+  --light-border-color: rgba(227, 228, 214, 0.8);
+  --light-button-hover-color: rgb(195, 196, 179);
+/* 
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
   background-color: #242424;
-
+ */
 /*   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -23,7 +28,17 @@ body {
   min-height: 100vh;
 }
 
+h1, h2, p {
+  margin: 0;
+}
 
+main {
+  min-height: calc(100vh - 74px - 32.8px);
+  display: flex;
+  justify-content: center;
+}
+
+/* 
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;
@@ -36,3 +51,4 @@ body {
     background-color: #f9f9f9;
   }
 }
+ */
