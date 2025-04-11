@@ -1,49 +1,82 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import "./Weather.css";
+
+import { loadStationList } from "../data/weatherData";
+import type { StationItemProps, StationListProps } from "../data/weatherType";
 
 const Weather = () => {
 
     const MAX_LENGTH = 30;
 
-    const [location, setLocation] = useState("Mimizan");
-    const [inputValue, setInputValue] = useState("Mimizan");
-    
-    const changeLocation = (event : React.MouseEvent<HTMLButtonElement>) => {
-        event.preventDefault();
-        setLocation(inputValue);
-    }
+    const [stations, setStations] = useState([]);
+    const [selectedStation, setSelectedStation] = useState(null);
+    const [searchTerm, setSearchTerm] = useState('');
 
-    const changeInputValue = (event : React.ChangeEvent<HTMLInputElement>) => {
-        event.preventDefault();
-        setInputValue(event.target.value);
-    }
+    useEffect(() => {
+        fetch("./liste-stations.csv")
+            .then(response => response.text())
+            .then(data => {
+                const {stationList} = loadStationList(data);
+                setStations(stationList);
+            })
+    }, []);
 
-    console.log(`location : ${location}`);
-    console.log(`inputValue : ${inputValue}`);
+    // keep?
+    const filteredStations = stations.filter((station) =>
+        station.Nom_usuel.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+
+    const handleChangeStation = (event : React.ChangeEvent<HTMLInputElement>) => {
+        event.preventDefault();
+        const station = filteredStations.find( item => 
+            item.Nom_usuel.toLowerCase() === searchTerm.toLowerCase()
+        );
+        if (station) {
+            setSelectedStation(station);
+        }
+    };
+
+    console.log(`Selected station : ${stations}`);
 
     return(
         <section className="weather-container">
             <section className="weather-section">
-                <section className="location-form">
+                <section className="station-form">
+
                     <input 
-                        id="location"
-                        name="location"
+                        id="station"
+                        name="station"
                         type="text" 
+                        placeholder="Search meteo station"
                         maxLength={MAX_LENGTH}
-                        value={inputValue}
-                        onChange={event => changeInputValue(event)}
+                        value={searchTerm}
+                        onChange={event => setSearchTerm(event.target.value)}
+                        list="station-list"
                     />
+
+                    <datalist id="station-list">
+                        {filteredStations.map((station) => (
+                            <option key={station.Nom_usuel} value={station.Nom_usuel} />
+                        ))}
+                    </datalist>
+
                     <button
                         type="button"
-                        onClick={event => changeLocation(event)}
+                        onClick={event => handleChangeStation(event)}
                     >
                         Change location
                     </button>
+
                 </section>
-                <section className="weather-data-display">
-                    Display data
-                </section>
+                
+                {selectedStation && (
+                    <section className="weather-data-display">
+                        <h3>Selected station :</h3>
+                        <p>{selectedStation.Nom_usuel}</p>
+                    </section>
+                )}
+
             </section>
         </section>
     )

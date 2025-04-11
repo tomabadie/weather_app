@@ -10,7 +10,7 @@
         background-color: var(--light-background-bloc-color);
         border-radius: 1rem;
 
-        .location-form{
+        .station-form{
             display: flex;
             flex-direction: row;
             gap: 1rem;
@@ -30,7 +30,9 @@
         .weather-data-display {
             display: flex;
             justify-content: center;
+            align-items: center;
             border: 1px solid black;
+            gap: 1rem;
         }
     }
 }
