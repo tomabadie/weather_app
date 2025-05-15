@@ -1,0 +1,10 @@
+footer {
+    display: flex;
+    justify-content: center;
+    background-color: var(--light-background-bloc-color);
+    
+    p{
+        font-size: 0.7rem;
+        padding: 0.5rem;
+    }
+}
