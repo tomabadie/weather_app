@@ -17,19 +17,18 @@ const Weather = () => {
         fetch("./liste-stations.csv")
             .then(response => response.text())
             .then(data => {
-                const {stationList} = loadStationList(data);
+                const { stationList } = loadStationList(data);
                 setStations(stationList);
             })
     }, []);
 
-    // keep?
     const filteredStations = stations.filter((station) =>
         station.Nom_usuel.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
-    const handleChangeStation = (event : React.ChangeEvent<HTMLInputElement>) => {
+    const handleChangeStation = (event: React.ChangeEvent<HTMLInputElement>) => {
         event.preventDefault();
-        const station = filteredStations.find( item => 
+        const station = filteredStations.find(item =>
             item.Nom_usuel.toLowerCase() === searchTerm.toLowerCase()
         );
         if (station) {
@@ -39,15 +38,15 @@ const Weather = () => {
 
     console.log(`Selected station : ${stations}`);
 
-    return(
+    return (
         <section className="weather-container">
             <section className="weather-section">
                 <section className="station-form">
 
-                    <input 
+                    <input
                         id="station"
                         name="station"
-                        type="text" 
+                        type="text"
                         placeholder="Search meteo station"
                         maxLength={MAX_LENGTH}
                         value={searchTerm}
@@ -69,7 +68,7 @@ const Weather = () => {
                     </button>
 
                 </section>
-                
+
                 {selectedStation && (
                     <section className="weather-data-display">
                         <h3>Selected station :</h3>
